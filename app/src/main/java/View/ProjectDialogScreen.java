@@ -4,18 +4,25 @@
  */
 package View;
 
+import Control.projectsController;
+import Model.Projects;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author graci
  */
 public class ProjectDialogScreen extends javax.swing.JDialog {
 
+    projectsController projectController;
+ 
     /**
      * Creates new form ProjectDialogScreen
      */
     public ProjectDialogScreen(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        projectController = new projectsController();
     }
 
     /**
@@ -49,6 +56,11 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
         jLabelSave.setBackground(new java.awt.Color(0, 102, 0));
         jLabelSave.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/check.png"))); // NOI18N
+        jLabelSave.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelSaveMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelTitleLayout = new javax.swing.GroupLayout(jPanelTitle);
         jPanelTitle.setLayout(jPanelTitleLayout);
@@ -146,6 +158,20 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
     private void jTextFieldNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNameActionPerformed
+
+    private void jLabelSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSaveMouseClicked
+        // TODO add your handling code here:
+        try{
+        Projects project = new Projects();
+        project.setName(jTextFieldName.getText());
+        project.setDescription(jTextFieldDescription.getText());
+        projectController.save(project);
+            JOptionPane.showMessageDialog(rootPane, "Projeto salvo com sucesso.");
+        } catch(Exception ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
+        this.dispose();
+    }//GEN-LAST:event_jLabelSaveMouseClicked
 
     /**
      * @param args the command line arguments
