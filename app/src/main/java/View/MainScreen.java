@@ -4,17 +4,27 @@
  */
 package View;
 
+import Control.projectsController;
+import Model.Projects;
+import java.util.List;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author graci
  */
 public class MainScreen extends javax.swing.JFrame {
 
+    projectsController projectController;
+    DefaultListModel projectListModel;
+    
     /**
      * Creates new form MainScreen
      */
     public MainScreen() {
         initComponents();
+        initControllers();
+        initModelComponents();
     }
 
     /**
@@ -121,11 +131,8 @@ public class MainScreen extends javax.swing.JFrame {
         jPanelProjectsList.setBackground(java.awt.Color.white);
         jPanelProjectsList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jListProjectsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        jListProjectsList.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jListProjectsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPaneProjectsList.setViewportView(jListProjectsList);
 
         javax.swing.GroupLayout jPanelProjectsListLayout = new javax.swing.GroupLayout(jPanelProjectsList);
@@ -208,7 +215,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGroup(jPanelEmptyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelEmptyIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelEmptyTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelEmptySubtitle, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE))
+                    .addComponent(jLabelEmptySubtitle, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelEmptyLayout.setVerticalGroup(
@@ -342,4 +349,29 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelTitle;
     private javax.swing.JScrollPane jScrollPaneProjectsList;
     // End of variables declaration//GEN-END:variables
+
+public void initControllers(){
+    projectController = new projectsController();
+}
+
+public void initModelComponents(){
+    
+    projectListModel = new DefaultListModel();
+    projectsForListModel();
+    
+}
+
+public void projectsForListModel(){
+    
+    List<Projects> projectsList = projectController.getAll();
+    projectListModel.clear();
+    
+    for (int i = 0; i < projectsList.size(); i++){
+        Projects project = projectsList.get(i);
+        projectListModel.addElement(project);
+        }
+    jListProjectsList.setModel(projectListModel);
+    
+}
+
 }
