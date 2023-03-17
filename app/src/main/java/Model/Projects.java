@@ -73,7 +73,7 @@ public class Projects {
 
     @Override
     public String toString() {
-        return "Tasks{" + "id=" + id + ", name=" + name + ", description=" + description + ", creationDate=" + creationDate + ", updateDate=" + updateDate + '}';
+        return this.name;
     }
 
 }
